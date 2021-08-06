@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/register', [\App\Http\Controllers\Api\RegisterController::class, 'register']);
+Route::post('/login', [\App\Http\Controllers\Api\LoginController::class, 'login']);
+
+Route::middleware(['authtoken'])->group(function(){
+    Route::post('/game', [\App\Http\Controllers\Api\GameController::class, 'index']);
+});
