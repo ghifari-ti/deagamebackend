@@ -19,7 +19,8 @@ class CreateSoalsTable extends Migration
             $table->foreign('level_id')->references('id')->on('levels')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->integer('soal_number');
-            $table->string('soal_img');
+            $table->string('soal_img')->nullable();
+            $table->longText('soal_text')->nullable();
             $table->json('list_jawaban');
             $table->char('kunci_jawaban');
             $table->longText('penjelasan');

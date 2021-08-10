@@ -13,14 +13,14 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('username', $request->username)->first();
+        $user = User::where('email', $request->email)->first();
         if($user == null)
         {
-            return response()->json(['status' => 'error', 'description' => 'username not found'], 401);
+            return response()->json(['status' => 'error', 'description' => 'Email tidak ditemukan'], 400);
         }
         if(!Hash::check($request->password, $user->password))
         {
-            return response()->json(['status' => 'error', 'description' => 'wrong password'], 401);
+            return response()->json(['status' => 'error', 'description' => 'Passowrd salah'], 400);
         }
         if($user->token()->first() == null)
         {
@@ -35,5 +35,20 @@ class LoginController extends Controller
         }
             $token->save();
         return response()->json(['status' => 'OK', 'token' => $token->token], 200);
+    }
+
+    public function loginWeb(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if(!$user)
+        {
+            return redirect()->back();
+        }
+
+        if(!Hash::check($request->passsword, $user->password))
+        {
+            return redirect()->back();
+        }
+
     }
 }
