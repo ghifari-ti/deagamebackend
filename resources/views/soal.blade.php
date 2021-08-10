@@ -79,7 +79,9 @@
     var editor_config = {
         path_absolute : "/",
         selector: 'textarea.my-editor',
-        relative_urls: false,
+        relative_urls : false,
+        remove_script_host : false,
+        convert_urls : true,
         plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars code fullscreen",
