@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jawaban;
 use App\Models\Soal;
 use Illuminate\Http\Request;
 
@@ -41,5 +42,49 @@ class GameController extends Controller
         $soal->save();
 
         return redirect()->back();
+    }
+
+    public function saveJawaban(Request $request)
+    {
+        if($request->type == 'remedial')
+        {
+            $remed = Jawaban::where('type', $request->type)->where('user_id', $request->user_id)->get();
+            $remed->delete();
+        }
+        foreach ($request->list_jawaban as $jwb)
+        {
+            $jawaban = new Jawaban;
+            $jawaban->level = $request->level;
+            $jawaban->soal_id = $jwb['id'];
+            $jawaban->is_true = $jwb['is_true'];
+            $jawaban->type = $request->type;
+            $jawaban->user_id = $request->user_id;
+            $jawaban->save();
+        }
+        return response()->json(['status' => 'OK'], 200);
+
+    }
+
+    public function cekJawaban(Request $request)
+    {
+        $jawaban = Jawaban::where('level', $request->level)->where('user_id', $request->user_id)
+            ->where('type', $request->type)->get();
+
+        $total = 0;
+        if(count($jawaban) == 0){
+            return response()->json(['level' => 'locked']);
+        }
+        foreach ($jawaban as $jwb)
+        {
+            if($jwb->is_true)
+            {
+                $total += 1;
+            }
+        }
+        if($total < 7){
+            return response()->json(['level' => 'remedial', 'nilai' => $total]);
+        }
+            return response()->json(['level' => 'unlocked']);
+
     }
 }

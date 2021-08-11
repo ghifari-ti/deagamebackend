@@ -15,6 +15,7 @@ class CreateJawabansTable extends Migration
     {
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
+            $table->integer('level');
             $table->unsignedBigInteger('soal_id');
             $table->foreign('soal_id')->references('id')->on('soals')
                 ->cascadeOnUpdate()->cascadeOnDelete();
