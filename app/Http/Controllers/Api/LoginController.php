@@ -34,7 +34,7 @@ class LoginController extends Controller
             $token->expired = '-';
         }
             $token->save();
-        return response()->json(['status' => 'OK', 'token' => $token->token], 200);
+        return response()->json(['status' => 'OK', 'token' => $token->token, 'user_id' => $user->id], 200);
     }
 
     public function loginWeb(Request $request)
