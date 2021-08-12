@@ -48,7 +48,7 @@ class GameController extends Controller
     {
         if($request->type == 'remedial')
         {
-            $remed = Jawaban::where('type', $request->type)->where('user_id', $request->user_id)->get();
+            $remed = Jawaban::where('type', $request->type)->where('user_id', $request->user_id);
             $remed->delete();
         }
         foreach ($request->list_jawaban as $jwb)
