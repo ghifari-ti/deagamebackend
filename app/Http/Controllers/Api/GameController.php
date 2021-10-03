@@ -78,10 +78,10 @@ class GameController extends Controller
         {
             if($jwb->is_true)
             {
-                $total += 1;
+                $total += 2;
             }
         }
-        if($total < 7){
+        if($total < 6){
             return response()->json(['level' => 'remedial', 'nilai' => $total]);
         }
             return response()->json(['level' => 'unlocked']);
