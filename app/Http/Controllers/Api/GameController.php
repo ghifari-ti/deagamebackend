@@ -84,7 +84,7 @@ class GameController extends Controller
         if($total < 6){
             return response()->json(['level' => 'remedial', 'nilai' => $total]);
         }
-            return response()->json(['level' => 'unlocked']);
+            return response()->json(['level' => 'unlocked', 'nilai' => $total]);
 
     }
 }
